@@ -1,5 +1,5 @@
-import http from 'http';
 import 'dotenv/config';
+import http from 'http';
 
 const PORT = process.env.PORT || 5137;
 
