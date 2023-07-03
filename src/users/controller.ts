@@ -5,25 +5,27 @@ import { usersDb } from './data';
 
 export class UsersController implements IUsersController {
   async getUsers(): Promise<User[]> {
-    return usersDb;
+    return usersDb.users;
   }
 
   async getUserById(id: string): Promise<User> {
-    const user = usersDb.find((user) => user.id === id);
+    const user = usersDb.users.find((user) => user.id === id);
     if (!user) {
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
     }
+    process.send(usersDb);
     return user;
   }
 
   async createUser(userData: NewUser): Promise<User> {
     const createdUser = { id: uuidv4(), ...userData };
-    usersDb.push(createdUser);
+    usersDb.users.push(createdUser);
+    process.send(usersDb);
     return createdUser;
   }
 
   async updateUser(id: string, userData: NewUser): Promise<User> {
-    const foundUserIdx = usersDb.findIndex((user) => user.id === id);
+    const foundUserIdx = usersDb.users.findIndex((user) => user.id === id);
 
     if (foundUserIdx === -1) {
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
@@ -31,14 +33,16 @@ export class UsersController implements IUsersController {
 
     const updatedUser = { id: usersDb[foundUserIdx].id, ...userData };
     usersDb[foundUserIdx] = updatedUser;
+    process.send(usersDb);
     return updatedUser;
   }
 
   async deleteUser(id: string): Promise<void> {
-    const foundUserIdx = usersDb.findIndex((user) => user.id === id);
+    const foundUserIdx = usersDb.users.findIndex((user) => user.id === id);
     if (foundUserIdx === -1) {
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
     }
-    usersDb.splice(foundUserIdx, 1);
+    usersDb.users.splice(foundUserIdx, 1);
+    process.send(usersDb);
   }
 }

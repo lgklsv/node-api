@@ -11,6 +11,10 @@ interface NewUser {
   hobbies: string[];
 }
 
+interface UsersDb {
+  users: User[];
+}
+
 interface IUsersController {
   getUsers: () => Promise<User[]>;
   getUserById: (id: string) => Promise<User>;
