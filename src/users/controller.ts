@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { ERROR_MES, STATUS_CODES } from '../const';
 import { AppError } from '../errors/AppError';
 import { usersDb } from './data';
+import { config } from '../utils';
+const { isMulti } = config();
 
 export class UsersController implements IUsersController {
   async getUsers(): Promise<User[]> {
@@ -13,14 +15,14 @@ export class UsersController implements IUsersController {
     if (!user) {
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
     }
-    process.send(usersDb);
+    if (isMulti) process.send(usersDb);
     return user;
   }
 
   async createUser(userData: NewUser): Promise<User> {
     const createdUser = { id: uuidv4(), ...userData };
     usersDb.users.push(createdUser);
-    process.send(usersDb);
+    if (isMulti) process.send(usersDb);
     return createdUser;
   }
 
@@ -33,7 +35,7 @@ export class UsersController implements IUsersController {
 
     const updatedUser = { id: usersDb[foundUserIdx].id, ...userData };
     usersDb[foundUserIdx] = updatedUser;
-    process.send(usersDb);
+    if (isMulti) process.send(usersDb);
     return updatedUser;
   }
 
@@ -43,6 +45,6 @@ export class UsersController implements IUsersController {
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
     }
     usersDb.users.splice(foundUserIdx, 1);
-    process.send(usersDb);
+    if (isMulti) process.send(usersDb);
   }
 }

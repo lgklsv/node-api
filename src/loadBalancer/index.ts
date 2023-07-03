@@ -7,9 +7,7 @@ export const loadBalancer = (
   numCPUs: number
 ) => {
   return (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
-    console.info(`Request ${req.method}: ${req.url} to Load Balancer`);
     const nextPort = port + (portIdx++ % numCPUs);
-    console.log(nextPort);
 
     const options = {
       host: HOST_URL,
@@ -19,7 +17,6 @@ export const loadBalancer = (
       headers: req.headers,
     };
     const connector = http.request(options, (response: IncomingMessage) => {
-      console.log(`STATUS: ${response.statusCode}`);
       res.writeHead(
         response.statusCode,
         response.statusMessage,
