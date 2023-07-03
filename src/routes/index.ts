@@ -8,7 +8,6 @@ export const router = () => {
     res.setHeader('Content-Type', 'application/json');
     try {
       switch (true) {
-        // /api/users
         case req.url.startsWith(USERS_URL):
           await usersRouter(req, res);
           break;

@@ -7,4 +7,5 @@ interface User {
 
 interface IUsersController {
   getUsers: () => Promise<User[]>;
+  getUserById: (id: string) => Promise<User>;
 }

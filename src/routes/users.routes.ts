@@ -15,8 +15,9 @@ export const usersRouter = async (
   switch (method) {
     case METHODS.GET:
       if (id) {
+        const user = await usersController.getUserById(id);
         res.writeHead(STATUS_CODES.OK);
-        res.end(JSON.stringify('USER BY ID'));
+        res.end(JSON.stringify(user));
       } else {
         const users = await usersController.getUsers();
         res.writeHead(STATUS_CODES.OK);
