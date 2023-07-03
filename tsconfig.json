@@ -11,7 +11,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "build",
     "typeRoots": ["./node_modules/@types"]
   },
   "include": ["src"],
