@@ -1,5 +1,11 @@
 interface User {
-  id?: string;
+  id: string;
+  username: string;
+  age: number;
+  hobbies: string[];
+}
+
+interface NewUser {
   username: string;
   age: number;
   hobbies: string[];
@@ -8,4 +14,5 @@ interface User {
 interface IUsersController {
   getUsers: () => Promise<User[]>;
   getUserById: (id: string) => Promise<User>;
+  createUser: (user: NewUser) => Promise<User>;
 }
