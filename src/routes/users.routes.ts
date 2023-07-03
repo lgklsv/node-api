@@ -27,13 +27,24 @@ export const usersRouter = async (
       break;
     case METHODS.POST:
       if (id) throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NOT_FOUND);
-      const userData = await getReqData(req);
-      validateUserData(userData);
+      const newUserData = await getReqData(req);
+      validateUserData(newUserData);
       const createdUser = await usersController.createUser(
-        JSON.parse(userData)
+        JSON.parse(newUserData)
       );
       res.writeHead(STATUS_CODES.CREATED);
       res.end(JSON.stringify(createdUser));
+      break;
+    case METHODS.PUT:
+      if (!id) throw new AppError(STATUS_CODES.BAD_REQUEST, ERROR_MES.NO_ID);
+      const userDataToUpdate = await getReqData(req);
+      validateUserData(userDataToUpdate);
+      const updatedUser = await usersController.updateUser(
+        id,
+        JSON.parse(userDataToUpdate)
+      );
+      res.writeHead(STATUS_CODES.OK);
+      res.end(JSON.stringify(updatedUser));
       break;
     default:
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NOT_FOUND);

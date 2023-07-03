@@ -16,9 +16,21 @@ export class UsersController implements IUsersController {
     return user;
   }
 
-  async createUser(user: NewUser): Promise<User> {
-    const createdUser = { id: uuidv4(), ...user };
+  async createUser(userData: NewUser): Promise<User> {
+    const createdUser = { id: uuidv4(), ...userData };
     usersDb.push(createdUser);
     return createdUser;
+  }
+
+  async updateUser(id: string, userData: NewUser): Promise<User> {
+    console.log(id, userData);
+    const foundUserIdx = usersDb.findIndex((user) => user.id === id);
+    console.log(foundUserIdx);
+    if (foundUserIdx === -1) {
+      throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
+    }
+    const updatedUser = { id: usersDb[foundUserIdx].id, ...userData };
+    usersDb[foundUserIdx] = updatedUser;
+    return updatedUser;
   }
 }

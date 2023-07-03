@@ -14,5 +14,6 @@ interface NewUser {
 interface IUsersController {
   getUsers: () => Promise<User[]>;
   getUserById: (id: string) => Promise<User>;
-  createUser: (user: NewUser) => Promise<User>;
+  createUser: (userData: NewUser) => Promise<User>;
+  updateUser: (id: string, userData: NewUser) => Promise<User>;
 }
