@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { UsersController } from '../users/controller';
-import { METHODS, USERS_URL } from '../const';
+import { METHODS, STATUS_CODES, USERS_URL } from '../const';
 import { extractId } from '../utils/extractId';
 import { AppError } from '../errors/AppError';
 
@@ -15,15 +15,17 @@ export const usersRouter = async (
   switch (method) {
     case METHODS.GET:
       if (id) {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(STATUS_CODES.OK, {
+          'Content-Type': 'application/json',
+        });
         res.end(JSON.stringify('USER BY ID'));
       } else {
         const users = await usersController.getUsers();
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(STATUS_CODES.OK, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(users));
       }
       break;
     default:
-      throw new AppError(404, 'Invalid method');
+      throw new AppError(STATUS_CODES.NOT_FOUND, 'Invalid method');
   }
 };

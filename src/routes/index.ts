@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { usersRouter } from './users.routes';
-import { USERS_URL } from '../const';
+import { STATUS_CODES, USERS_URL } from '../const';
 import { AppError } from '../errors/AppError';
 
 export const router = () => {
@@ -12,10 +12,10 @@ export const router = () => {
           await usersRouter(req, res);
           break;
         default:
-          throw new AppError(404, 'Invalid route');
+          throw new AppError(STATUS_CODES.NOT_FOUND, 'Invalid route');
       }
     } catch (err) {
-      let code = 500;
+      let code = STATUS_CODES.INTERNAL;
       let message = 'Something went wrong on the server';
       if (err instanceof AppError) {
         code = err.statusCode;
