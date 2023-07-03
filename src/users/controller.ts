@@ -33,8 +33,8 @@ export class UsersController implements IUsersController {
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
     }
 
-    const updatedUser = { id: usersDb[foundUserIdx].id, ...userData };
-    usersDb[foundUserIdx] = updatedUser;
+    const updatedUser = { id: usersDb.users[foundUserIdx].id, ...userData };
+    usersDb.users[foundUserIdx] = updatedUser;
     if (isMulti) process.send(usersDb);
     return updatedUser;
   }
