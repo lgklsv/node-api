@@ -1,5 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { UsersController } from '../users/controller';
+import { METHODS, USERS_URL } from '../const';
+import { extractId } from '../utils/extractId';
 
 export const usersRouter = async (
   req: IncomingMessage,
@@ -7,14 +9,20 @@ export const usersRouter = async (
 ) => {
   const usersController = new UsersController();
   const { url, method } = req;
+  const id = extractId(url, USERS_URL);
 
-  if (method === 'GET') {
-    // /api/users : GET
-    const users = await usersController.getUsers();
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(users));
-  } else {
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'Route not found' }));
+  switch (method) {
+    case METHODS.GET:
+      if (id) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify('USER BY ID'));
+      } else {
+        const users = await usersController.getUsers();
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(users));
+      }
+      break;
+    default:
+      throw new Error('404');
   }
 };
