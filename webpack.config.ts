@@ -1,7 +1,7 @@
 import path from 'path';
 
 module.exports = {
-  entry: './src/server.ts',
+  entry: './src/index.ts',
   target: 'node',
   output: {
     filename: 'index.js',
