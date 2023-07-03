@@ -9,7 +9,7 @@
     "start:prod": "cross-env NODE_ENV=production npm run build && node ./build/index.js",
     "start:multi": "cross-env NODE_ENV=development SERVER_MODE=cluster nodemon src/index.ts",
     "build": "webpack",
-    "test": "jest --verbose"
+    "test": "jest --verbose --silent"
   },
   "keywords": [],
   "author": "lgklsv",
