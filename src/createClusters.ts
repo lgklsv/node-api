@@ -25,7 +25,7 @@ export const createClusters = (port: number) => {
     const server = http.createServer(loadBalancer(port, portIdx, numCPUs));
 
     server.listen(port, () => {
-      console.info(`⚙️  Load Balancer is listening on port ${port}`);
+      console.info(`⚙️  Load Balancer is listening on PORT: ${port}`);
     });
 
     server.on('error', (err) =>

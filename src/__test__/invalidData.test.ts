@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import http from 'http';
 import supertest, { SuperTest } from 'supertest';
-import { ERROR_MES, STATUS_CODES, USERS_URL } from '../const';
+import { DEFAULT_PORT, ERROR_MES, STATUS_CODES, USERS_URL } from '../const';
 import { router } from '../routes';
 
 const RANDOM_UUID = uuidv4();
@@ -27,7 +27,7 @@ describe('e2e tests single core invalid data', () => {
   let server: SuperTest<supertest.Test>;
 
   beforeAll(() => {
-    server = supertest(http.createServer(router));
+    server = supertest(http.createServer(router(DEFAULT_PORT)));
   });
 
   it('should return invalid route 404 message if access wrong api route', async () => {

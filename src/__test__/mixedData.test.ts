@@ -1,7 +1,7 @@
 import http from 'http';
 import { v4 as uuidv4 } from 'uuid';
 import supertest, { SuperTest } from 'supertest';
-import { ERROR_MES, STATUS_CODES, USERS_URL } from '../const';
+import { DEFAULT_PORT, ERROR_MES, STATUS_CODES, USERS_URL } from '../const';
 import { router } from '../routes';
 
 const RANDOM_UUID = uuidv4();
@@ -41,7 +41,7 @@ describe('e2e tests single core mixed data', () => {
   let userIdToDelete2: string;
 
   beforeAll(() => {
-    server = supertest(http.createServer(router));
+    server = supertest(http.createServer(router(DEFAULT_PORT)));
   });
 
   it('should return empty array on the first GET request', async () => {

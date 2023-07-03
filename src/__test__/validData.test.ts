@@ -1,6 +1,6 @@
 import http from 'http';
 import supertest, { SuperTest } from 'supertest';
-import { STATUS_CODES, USERS_URL } from '../const';
+import { DEFAULT_PORT, STATUS_CODES, USERS_URL } from '../const';
 import { router } from '../routes';
 
 const user1 = {
@@ -22,7 +22,7 @@ describe('e2e tests single core valid data', () => {
   let userId: string;
 
   beforeAll(() => {
-    server = supertest(http.createServer(router));
+    server = supertest(http.createServer(router(DEFAULT_PORT)));
   });
 
   it('should return empty array on the first GET request', async () => {

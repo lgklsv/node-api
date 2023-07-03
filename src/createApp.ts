@@ -2,10 +2,10 @@ import http from 'http';
 import { router } from './routes';
 
 export const createApp = (port: number) => {
-  const server = http.createServer(router);
+  const server = http.createServer(router(port));
 
   server.listen(port, () => {
-    console.log(`🚀 Server started on port: ${port}, pid=${process.pid}`);
+    console.log(`🚀 Server started on PORT: ${port}, pid: ${process.pid}`);
   });
 
   server.on('error', (err) =>
