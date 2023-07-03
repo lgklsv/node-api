@@ -15,13 +15,11 @@ export const usersRouter = async (
   switch (method) {
     case METHODS.GET:
       if (id) {
-        res.writeHead(STATUS_CODES.OK, {
-          'Content-Type': 'application/json',
-        });
+        res.writeHead(STATUS_CODES.OK);
         res.end(JSON.stringify('USER BY ID'));
       } else {
         const users = await usersController.getUsers();
-        res.writeHead(STATUS_CODES.OK, { 'Content-Type': 'application/json' });
+        res.writeHead(STATUS_CODES.OK);
         res.end(JSON.stringify(users));
       }
       break;

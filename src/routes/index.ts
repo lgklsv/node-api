@@ -5,6 +5,7 @@ import { AppError } from '../errors/AppError';
 
 export const router = () => {
   return async (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
+    res.setHeader('Content-Type', 'application/json');
     try {
       switch (true) {
         // /api/users
@@ -22,7 +23,7 @@ export const router = () => {
         message = err.message;
       }
 
-      res.writeHead(code, { 'Content-Type': 'application/json' });
+      res.writeHead(code);
       res.end(JSON.stringify({ message }));
     }
   };
