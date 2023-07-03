@@ -49,6 +49,13 @@ describe('e2e tests single core valid data', () => {
     expect(response.body).toMatchObject([createdUser1]);
   });
 
+  it('should GET newly created user by ID', async () => {
+    const response = await server.get(`${USERS_URL}/${userId}`);
+
+    expect(response.statusCode).toBe(STATUS_CODES.OK);
+    expect(response.body).toMatchObject(createdUser1);
+  });
+
   it('should update user with PUT request, id and valid data', async () => {
     const response = await server.put(`${USERS_URL}/${userId}`).send(user2);
     updatedUser2 = response.body;
