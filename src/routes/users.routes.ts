@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { UsersController } from '../users/controller';
-import { METHODS, STATUS_CODES, USERS_URL } from '../const';
+import { ERROR_MES, METHODS, STATUS_CODES, USERS_URL } from '../const';
 import { extractId } from '../utils/extractId';
 import { AppError } from '../errors/AppError';
 
@@ -26,6 +26,6 @@ export const usersRouter = async (
       }
       break;
     default:
-      throw new AppError(STATUS_CODES.NOT_FOUND, 'Invalid method');
+      throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NOT_FOUND);
   }
 };

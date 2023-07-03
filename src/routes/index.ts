@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { usersRouter } from './users.routes';
-import { STATUS_CODES, USERS_URL } from '../const';
+import { ERROR_MES, STATUS_CODES, USERS_URL } from '../const';
 import { AppError } from '../errors/AppError';
 
 export const router = () => {
@@ -16,7 +16,7 @@ export const router = () => {
       }
     } catch (err) {
       let code = STATUS_CODES.INTERNAL;
-      let message = 'Something went wrong on the server';
+      let message: string = ERROR_MES.INTERNAL;
       if (err instanceof AppError) {
         code = err.statusCode;
         message = err.message;
