@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { UsersController } from '../users/controller';
 import { METHODS, USERS_URL } from '../const';
 import { extractId } from '../utils/extractId';
+import { AppError } from '../errors/AppError';
 
 export const usersRouter = async (
   req: IncomingMessage,
@@ -23,6 +24,6 @@ export const usersRouter = async (
       }
       break;
     default:
-      throw new Error('404');
+      throw new AppError(404, 'Invalid method');
   }
 };

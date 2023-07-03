@@ -1,4 +1,5 @@
 import { validate as uuidValidate } from 'uuid';
+import { AppError } from '../errors/AppError';
 
 export const extractId = (route: string, baseRoute: string): string | null => {
   if (route === baseRoute || route === baseRoute + '/') return null;
@@ -8,13 +9,13 @@ export const extractId = (route: string, baseRoute: string): string | null => {
     const afterBaseRouteSplitted = afterBaseRoute.split('/');
 
     if (afterBaseRouteSplitted.length !== 2) {
-      throw new Error('Invalid route');
+      throw new AppError(404, 'Invalid route');
     }
 
     const id = afterBaseRouteSplitted[1];
 
     if (!uuidValidate(id)) {
-      throw new Error('Invalid id');
+      throw new AppError(400, 'Invalid id');
     }
 
     return id;
