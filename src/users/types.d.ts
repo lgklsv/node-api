@@ -16,4 +16,5 @@ interface IUsersController {
   getUserById: (id: string) => Promise<User>;
   createUser: (userData: NewUser) => Promise<User>;
   updateUser: (id: string, userData: NewUser) => Promise<User>;
+  deleteUser: (id: string) => Promise<void>;
 }

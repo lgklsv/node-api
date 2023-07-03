@@ -23,14 +23,22 @@ export class UsersController implements IUsersController {
   }
 
   async updateUser(id: string, userData: NewUser): Promise<User> {
-    console.log(id, userData);
     const foundUserIdx = usersDb.findIndex((user) => user.id === id);
-    console.log(foundUserIdx);
+
     if (foundUserIdx === -1) {
       throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
     }
+
     const updatedUser = { id: usersDb[foundUserIdx].id, ...userData };
     usersDb[foundUserIdx] = updatedUser;
     return updatedUser;
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    const foundUserIdx = usersDb.findIndex((user) => user.id === id);
+    if (foundUserIdx === -1) {
+      throw new AppError(STATUS_CODES.NOT_FOUND, ERROR_MES.NO_USER);
+    }
+    usersDb.splice(foundUserIdx, 1);
   }
 }
